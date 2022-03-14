@@ -14,10 +14,21 @@ class ShortController extends Controller
     public function short(ShortRequest $request) {
        
         if($request->original_url) {
-            $new_url = ShortUrl::create([
 
-                'original_url' => $request->original_url,
-            ]);
+            if(auth()->user()) {
+                $new_url = auth()->user()->links()->create([
+
+                    'original_url' => $request->original_url,
+
+                ]);
+            } else {
+                $new_url = ShortUrl::create([
+
+                    'original_url' => $request->original_url,
+                ]);
+
+            }
+         
         }
 
         if($new_url) {
