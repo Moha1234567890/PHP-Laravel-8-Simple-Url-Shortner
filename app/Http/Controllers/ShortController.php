@@ -4,13 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use App\Http\Requests\ShortRequest;
 
 use App\Models\ShortUrl;
 
 class ShortController extends Controller
 {
     
-    public function short(Request $request) {
+    public function short(ShortRequest $request) {
        
         if($request->original_url) {
             $new_url = ShortUrl::create([
@@ -26,9 +27,21 @@ class ShortController extends Controller
                 'short_url' => $short_url
             ]);
 
-            return back();
+             return redirect()->back()->with('success_message', 'url short url: <a href="'. url($short_url).'"> "' . url($short_url) .'"</a>');
         }
 
         return back();
+    }
+
+    public function show($code) {
+        $short = ShortUrl::where('short_url', $code)->first();
+
+        if($short) {
+            return redirect()->to(url($short->original_url));
+        }
+
+        return redirect()->to('/');
+
+       
     }
 }

@@ -26,3 +26,4 @@ require __DIR__.'/auth.php';
 
 
 Route::post('/short', [ShortController::class, 'short'])->name('url.short');
+Route::get('/{code}', [ShortController::class, 'show'])->name('url.show');
