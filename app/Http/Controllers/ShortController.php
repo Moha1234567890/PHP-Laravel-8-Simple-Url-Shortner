@@ -38,7 +38,7 @@ class ShortController extends Controller
                 'short_url' => $short_url
             ]);
 
-             return redirect()->back()->with('success_message', 'url short url: <a href="'. url($short_url).'"> "' . url($short_url) .'"</a>');
+             return redirect()->back()->with('success_message', 'url short url: <a target="_blank" class="link" href="'. url($short_url).'"> "' . url($short_url) .'"</a>');
         }
 
         return back();
